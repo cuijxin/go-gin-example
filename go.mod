@@ -13,4 +13,5 @@ require (
 replace (
 	github.com/cuijxin/go-gin-example/models => ./go-gin-example/models
 	github.com/cuijxin/go-gin-example/pkg/setting => ./go-gin-example/pkg/setting
+	github.com/cuijxin/go-gin-example/routers => ./go-gin-example/routers
 )
