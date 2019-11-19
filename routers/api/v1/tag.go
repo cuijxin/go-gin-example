@@ -54,7 +54,7 @@ func GetTags(c *gin.Context) {
 // @Produce json
 // @Param name query string true "Name"
 // @Param state query int false "State"
-// @Param created_by query int false "CreatedBy"
+// @Param created_by query string false "CreatedBy"
 // @Success 200 {object} app.Response
 // @Failuer 500 {object} app.Response
 // @Security ApiKeyAuth
