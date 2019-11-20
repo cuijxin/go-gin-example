@@ -13,12 +13,13 @@ type Article struct {
 	TagID int `json:"tag_id" gorm:"index"`
 	Tag   Tag `json:"tag"`
 
-	Title      string `json:"title"`
-	Desc       string `json:"desc"`
-	Content    string `json:"content"`
-	CreatedBy  string `json:"created_by"`
-	ModifiedBy string `json:"modified_by"`
-	State      int    `json:"state"`
+	Title         string `json:"title"`
+	Desc          string `json:"desc"`
+	Content       string `json:"content"`
+	CoverImageUrl string `json:"cover_image_url"`
+	CreatedBy     string `json:"created_by"`
+	ModifiedBy    string `json:"modified_by"`
+	State         int    `json:"state"`
 }
 
 // 根据ID查找文章是否已经存在
@@ -65,12 +66,13 @@ func EditArticle(id int, data interface{}) bool {
 // 新增文章
 func AddArticle(data map[string]interface{}) bool {
 	db.Create(&Article{
-		TagID:     data["tag_id"].(int),
-		Title:     data["title"].(string),
-		Desc:      data["desc"].(string),
-		Content:   data["content"].(string),
-		CreatedBy: data["created_by"].(string),
-		State:     data["state"].(int),
+		TagID:         data["tag_id"].(int),
+		Title:         data["title"].(string),
+		Desc:          data["desc"].(string),
+		Content:       data["content"].(string),
+		CoverImageUrl: data["cover_image_url"].(string),
+		CreatedBy:     data["created_by"].(string),
+		State:         data["state"].(int),
 	})
 
 	return true

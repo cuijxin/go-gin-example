@@ -1,8 +1,11 @@
 package routers
 
 import (
+	"net/http"
+
 	"github.com/cuijxin/go-gin-example/middleware/jwt"
 	"github.com/cuijxin/go-gin-example/pkg/setting"
+	"github.com/cuijxin/go-gin-example/pkg/upload"
 	"github.com/cuijxin/go-gin-example/routers/api"
 	v1 "github.com/cuijxin/go-gin-example/routers/api/v1"
 
@@ -18,10 +21,19 @@ func InitRouter() *gin.Engine {
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
 
-	gin.SetMode(setting.RunMode)
-	r.GET("/auth", api.GetAuth)
+	gin.SetMode(setting.ServerSetting.RunMode)
 
+	// 实现http.FileServer
+	// 为了让前端访问到图片需要实现http.FileServer
+	// 一般如下：
+	// 1. CDN (公司使用CDN或自建分布式文件系统)
+	// 2. http.FileSystem （测试用，本地搭建）
+	// 本地搭建的话，Go本身对此就有很好的支持，而Gin更是再封装了一层，只需要在路由增加一行代码即可
+	r.StaticFS("/upload/images", http.Dir(upload.GetImageFullPath()))
+
+	r.GET("/auth", api.GetAuth)
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	r.POST("/upload", api.UploadImage)
 
 	apiv1 := r.Group("/api/v1")
 	apiv1.Use(jwt.JWT())
