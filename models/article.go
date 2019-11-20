@@ -83,6 +83,12 @@ func DeleteArticle(id int) bool {
 	return true
 }
 
+func CleanAllArticle() bool {
+	db.Unscoped().Where("deleted_on != ? ", 0).Delete(&Article{})
+
+	return true
+}
+
 // 在创建文章之前调用的gorm的CallBack函数，生成CreatedOn字段的时间戳
 func (article *Article) BeforeCreate(scope *gorm.Scope) error {
 	scope.SetColumn("CreatedOn", time.Now().Unix())
