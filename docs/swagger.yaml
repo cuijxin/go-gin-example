@@ -36,39 +36,45 @@ paths:
             $ref: '#/definitions/app.Response'
       security:
       - ApiKeyAuth: []
-      summary: 获取多个文章
+      summary: Get multiple articles
     post:
       parameters:
       - description: TagID
-        in: query
+        in: body
         name: tag_id
         required: true
-        type: integer
+        schema:
+          type: integer
       - description: Title
-        in: query
+        in: body
         name: title
         required: true
-        type: string
+        schema:
+          type: string
       - description: Desc
-        in: query
+        in: body
         name: desc
         required: true
-        type: string
+        schema:
+          type: string
       - description: Content
-        in: query
+        in: body
         name: content
         required: true
-        type: string
+        schema:
+          type: string
       - description: CreatedBy
-        in: query
+        in: body
         name: created_by
         required: true
-        type: string
+        schema:
+          type: string
       - description: State
-        in: query
+        in: body
         name: state
         required: true
-        type: integer
+        schema:
+          type: integer
       produces:
       - application/json
       responses:
@@ -78,7 +84,7 @@ paths:
             $ref: '#/definitions/app.Response'
       security:
       - ApiKeyAuth: []
-      summary: 新增文章
+      summary: Add article
   /api/v1/articles/{id}:
     delete:
       parameters:
@@ -96,7 +102,7 @@ paths:
             $ref: '#/definitions/app.Response'
       security:
       - ApiKeyAuth: []
-      summary: 删除文章
+      summary: Delete article
     get:
       parameters:
       - description: ID
@@ -113,7 +119,7 @@ paths:
             $ref: '#/definitions/app.Response'
       security:
       - ApiKeyAuth: []
-      summary: 获取单个文章
+      summary: Get a single article
     put:
       parameters:
       - description: ID
@@ -122,26 +128,31 @@ paths:
         required: true
         type: integer
       - description: TagID
-        in: query
+        in: body
         name: tag_id
-        type: string
+        schema:
+          type: string
       - description: Title
-        in: query
+        in: body
         name: title
-        type: string
+        schema:
+          type: string
       - description: Desc
-        in: query
+        in: body
         name: desc
-        type: string
+        schema:
+          type: string
       - description: Content
-        in: query
+        in: body
         name: content
-        type: string
+        schema:
+          type: string
       - description: ModifiedBy
-        in: query
+        in: body
         name: modified_by
         required: true
-        type: string
+        schema:
+          type: string
       - description: State
         in: body
         name: state
@@ -156,7 +167,7 @@ paths:
             $ref: '#/definitions/app.Response'
       security:
       - ApiKeyAuth: []
-      summary: 修改文章
+      summary: Update article
   /api/v1/tags:
     get:
       parameters:
@@ -177,22 +188,25 @@ paths:
             $ref: '#/definitions/app.Response'
       security:
       - ApiKeyAuth: []
-      summary: 获取多个文章标签
+      summary: Get multiple article tags
     post:
       parameters:
       - description: Name
-        in: query
+        in: body
         name: name
         required: true
-        type: string
+        schema:
+          type: string
       - description: State
-        in: query
+        in: body
         name: state
-        type: integer
+        schema:
+          type: integer
       - description: CreatedBy
-        in: query
+        in: body
         name: created_by
-        type: string
+        schema:
+          type: string
       produces:
       - application/json
       responses:
@@ -202,7 +216,7 @@ paths:
             $ref: '#/definitions/app.Response'
       security:
       - ApiKeyAuth: []
-      summary: 新增文章标签
+      summary: Add article tag
   /api/v1/tags/{id}:
     delete:
       parameters:
@@ -220,7 +234,7 @@ paths:
             $ref: '#/definitions/app.Response'
       security:
       - ApiKeyAuth: []
-      summary: 删除文章标签
+      summary: Delete article tag
     put:
       parameters:
       - description: ID
@@ -229,19 +243,22 @@ paths:
         required: true
         type: integer
       - description: Name
-        in: query
+        in: body
         name: name
         required: true
-        type: string
+        schema:
+          type: string
       - description: State
-        in: query
+        in: body
         name: state
-        type: integer
+        schema:
+          type: integer
       - description: ModifiedBy
-        in: query
+        in: body
         name: modified_by
         required: true
-        type: string
+        schema:
+          type: string
       produces:
       - application/json
       responses:
@@ -251,7 +268,27 @@ paths:
             $ref: '#/definitions/app.Response'
       security:
       - ApiKeyAuth: []
-      summary: 修改文章标签
+      summary: Update article tag
+  /api/v1/tags/import:
+    post:
+      parameters:
+      - description: Image File
+        in: formData
+        name: image
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/app.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/app.Response'
+      summary: Import Image
   /auth:
     get:
       parameters:
@@ -268,6 +305,10 @@ paths:
       responses:
         "200":
           description: OK
+          schema:
+            $ref: '#/definitions/app.Response'
+        "500":
+          description: Internal Server Error
           schema:
             $ref: '#/definitions/app.Response'
       summary: 获取认证信息

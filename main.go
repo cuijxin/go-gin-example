@@ -5,19 +5,26 @@ import (
 	"syscall"
 
 	"github.com/cuijxin/go-gin-example/models"
+	"github.com/cuijxin/go-gin-example/pkg/gredis"
 	"github.com/cuijxin/go-gin-example/pkg/logging"
 	"github.com/cuijxin/go-gin-example/pkg/setting"
+	"github.com/cuijxin/go-gin-example/pkg/util"
 	"github.com/cuijxin/go-gin-example/routers"
 	"github.com/fvbock/endless"
 )
+
+func init() {
+	setting.Setup()
+	models.Setup()
+	logging.Setup()
+	gredis.Setup()
+	util.Setup()
+}
 
 // @securityDefinitions.apikey ApiKeyAuth
 // @in header
 // @name Authorization
 func main() {
-	setting.Setup()
-	models.Setup()
-	logging.Setup()
 
 	endless.DefaultReadTimeOut = setting.ServerSetting.ReadTimeout
 	endless.DefaultWriteTimeOut = setting.ServerSetting.WriteTimeout

@@ -13,6 +13,7 @@ require (
 	github.com/go-openapi/jsonreference v0.19.3 // indirect
 	github.com/go-openapi/spec v0.19.4 // indirect
 	github.com/golang/protobuf v1.3.2 // indirect
+	github.com/gomodule/redigo v2.0.0+incompatible
 	github.com/jinzhu/gorm v1.9.11
 	github.com/json-iterator/go v1.1.8 // indirect
 	github.com/mailru/easyjson v0.7.0 // indirect
@@ -34,6 +35,7 @@ replace (
 	github.com/cuijxin/go-gin-example/docs => ./go-gin-example/docs
 	github.com/cuijxin/go-gin-example/middleware/jwt => ./go-gin-example/middleware/jwt
 	github.com/cuijxin/go-gin-example/models => ./go-gin-example/models
+	github.com/cuijxin/go-gin-example/pkg/app => ./go-gin-example/pkg/app
 	github.com/cuijxin/go-gin-example/pkg/e => ./go-gin-example/pkg/e
 	github.com/cuijxin/go-gin-example/pkg/file => ./go-gin-example/pkg/file
 	github.com/cuijxin/go-gin-example/pkg/logging => ./go-gin-example/pkg/logging
@@ -41,5 +43,9 @@ replace (
 	github.com/cuijxin/go-gin-example/pkg/upload => ./go-gin-example/pkg/upload
 	github.com/cuijxin/go-gin-example/pkg/util => ./go-gin-example/pkg/util
 	github.com/cuijxin/go-gin-example/routers => ./go-gin-example/routers
+	github.com/cuijxin/go-gin-example/service/article_service => ./go-gin-example/service/article_service
+	github.com/cuijxin/go-gin-example/service/auth_service => ./go-gin-example/service/auth_service
+	github.com/cuijxin/go-gin-example/service/cache_service => ./go-gin-example/service/cache_service
+	github.com/cuijxin/go-gin-example/service/tag_service => ./go-gin-example/service/tag_service
 
 )

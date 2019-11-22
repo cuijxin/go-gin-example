@@ -15,7 +15,7 @@
                 "produces": [
                     "application/json"
                 ],
-                "summary": "获取多个文章",
+                "summary": "Get multiple articles",
                 "parameters": [
                     {
                         "type": "integer",
@@ -54,49 +54,61 @@
                 "produces": [
                     "application/json"
                 ],
-                "summary": "新增文章",
+                "summary": "Add article",
                 "parameters": [
                     {
-                        "type": "integer",
                         "description": "TagID",
                         "name": "tag_id",
-                        "in": "query",
-                        "required": true
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
                     },
                     {
-                        "type": "string",
                         "description": "Title",
                         "name": "title",
-                        "in": "query",
-                        "required": true
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
                     },
                     {
-                        "type": "string",
                         "description": "Desc",
                         "name": "desc",
-                        "in": "query",
-                        "required": true
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
                     },
                     {
-                        "type": "string",
                         "description": "Content",
                         "name": "content",
-                        "in": "query",
-                        "required": true
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
                     },
                     {
-                        "type": "string",
                         "description": "CreatedBy",
                         "name": "created_by",
-                        "in": "query",
-                        "required": true
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
                     },
                     {
-                        "type": "integer",
                         "description": "State",
                         "name": "state",
-                        "in": "query",
-                        "required": true
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
                     }
                 ],
                 "responses": {
@@ -119,7 +131,7 @@
                 "produces": [
                     "application/json"
                 ],
-                "summary": "获取单个文章",
+                "summary": "Get a single article",
                 "parameters": [
                     {
                         "type": "integer",
@@ -147,7 +159,7 @@
                 "produces": [
                     "application/json"
                 ],
-                "summary": "修改文章",
+                "summary": "Update article",
                 "parameters": [
                     {
                         "type": "integer",
@@ -157,35 +169,45 @@
                         "required": true
                     },
                     {
-                        "type": "string",
                         "description": "TagID",
                         "name": "tag_id",
-                        "in": "query"
+                        "in": "body",
+                        "schema": {
+                            "type": "string"
+                        }
                     },
                     {
-                        "type": "string",
                         "description": "Title",
                         "name": "title",
-                        "in": "query"
+                        "in": "body",
+                        "schema": {
+                            "type": "string"
+                        }
                     },
                     {
-                        "type": "string",
                         "description": "Desc",
                         "name": "desc",
-                        "in": "query"
+                        "in": "body",
+                        "schema": {
+                            "type": "string"
+                        }
                     },
                     {
-                        "type": "string",
                         "description": "Content",
                         "name": "content",
-                        "in": "query"
+                        "in": "body",
+                        "schema": {
+                            "type": "string"
+                        }
                     },
                     {
-                        "type": "string",
                         "description": "ModifiedBy",
                         "name": "modified_by",
-                        "in": "query",
-                        "required": true
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
                     },
                     {
                         "description": "State",
@@ -214,7 +236,7 @@
                 "produces": [
                     "application/json"
                 ],
-                "summary": "删除文章",
+                "summary": "Delete article",
                 "parameters": [
                     {
                         "type": "integer",
@@ -244,7 +266,7 @@
                 "produces": [
                     "application/json"
                 ],
-                "summary": "获取多个文章标签",
+                "summary": "Get multiple article tags",
                 "parameters": [
                     {
                         "type": "string",
@@ -277,31 +299,68 @@
                 "produces": [
                     "application/json"
                 ],
-                "summary": "新增文章标签",
+                "summary": "Add article tag",
                 "parameters": [
                     {
-                        "type": "string",
                         "description": "Name",
                         "name": "name",
-                        "in": "query",
-                        "required": true
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
                     },
                     {
-                        "type": "integer",
                         "description": "State",
                         "name": "state",
-                        "in": "query"
+                        "in": "body",
+                        "schema": {
+                            "type": "integer"
+                        }
                     },
                     {
-                        "type": "string",
                         "description": "CreatedBy",
                         "name": "created_by",
-                        "in": "query"
+                        "in": "body",
+                        "schema": {
+                            "type": "string"
+                        }
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/app.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/tags/import": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Import Image",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "Image File",
+                        "name": "image",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/app.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
                         "schema": {
                             "$ref": "#/definitions/app.Response"
                         }
@@ -319,7 +378,7 @@
                 "produces": [
                     "application/json"
                 ],
-                "summary": "修改文章标签",
+                "summary": "Update article tag",
                 "parameters": [
                     {
                         "type": "integer",
@@ -329,24 +388,30 @@
                         "required": true
                     },
                     {
-                        "type": "string",
                         "description": "Name",
                         "name": "name",
-                        "in": "query",
-                        "required": true
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
                     },
                     {
-                        "type": "integer",
                         "description": "State",
                         "name": "state",
-                        "in": "query"
+                        "in": "body",
+                        "schema": {
+                            "type": "integer"
+                        }
                     },
                     {
-                        "type": "string",
                         "description": "ModifiedBy",
                         "name": "modified_by",
-                        "in": "query",
-                        "required": true
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
                     }
                 ],
                 "responses": {
@@ -367,7 +432,7 @@
                 "produces": [
                     "application/json"
                 ],
-                "summary": "删除文章标签",
+                "summary": "Delete article tag",
                 "parameters": [
                     {
                         "type": "integer",
@@ -409,6 +474,12 @@
                 "responses": {
                     "200": {
                         "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/app.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
                         "schema": {
                             "$ref": "#/definitions/app.Response"
                         }
