@@ -3,6 +3,7 @@ module github.com/cuijxin/go-gin-example
 go 1.13
 
 require (
+	github.com/360EntSecGroup-Skylar/excelize v1.4.1
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
 	github.com/astaxie/beego v1.12.0
 	github.com/cpuguy83/go-md2man/v2 v2.0.0 // indirect

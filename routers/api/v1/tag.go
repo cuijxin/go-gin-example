@@ -13,6 +13,7 @@ import (
 	"github.com/cuijxin/go-gin-example/pkg/app"
 	"github.com/cuijxin/go-gin-example/pkg/e"
 	"github.com/cuijxin/go-gin-example/pkg/export"
+	"github.com/cuijxin/go-gin-example/pkg/logging"
 	"github.com/cuijxin/go-gin-example/pkg/setting"
 	"github.com/cuijxin/go-gin-example/pkg/util"
 	"github.com/cuijxin/go-gin-example/service/tag_service"
@@ -237,4 +238,33 @@ func ExportTag(c *gin.Context) {
 		"export_url":      export.GetExcelFullUrl(filename),
 		"export_save_url": export.GetExcelPath() + filename,
 	})
+}
+
+// @Summary Import article tag
+// @Produce json
+// @Accept multipart/form-data
+// @Param file formData file true "Excel File"
+// @Success 200 {object} app.Response
+// @Failure 500 {object} app.Response
+// @Security ApiKeyAuth
+// @Router /api/v1/tags/import [post]
+func ImportTag(c *gin.Context) {
+	appG := app.Gin{C: c}
+
+	file, _, err := c.Request.FormFile("file")
+	if err != nil {
+		logging.Warn(err)
+		appG.Response(http.StatusOK, e.ERROR, nil)
+		return
+	}
+
+	tagService := tag_service.Tag{}
+	err = tagService.Import(file)
+	if err != nil {
+		logging.Warn(err)
+		appG.Response(http.StatusOK, e.ERROR_IMPORT_TAG_FAIL, nil)
+		return
+	}
+
+	appG.Response(http.StatusOK, e.SUCCESS, nil)
 }

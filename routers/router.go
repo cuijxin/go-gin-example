@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/cuijxin/go-gin-example/middleware/jwt"
+	"github.com/cuijxin/go-gin-example/pkg/export"
 	"github.com/cuijxin/go-gin-example/pkg/setting"
 	"github.com/cuijxin/go-gin-example/pkg/upload"
 	"github.com/cuijxin/go-gin-example/routers/api"
@@ -30,6 +31,7 @@ func InitRouter() *gin.Engine {
 	// 2. http.FileSystem （测试用，本地搭建）
 	// 本地搭建的话，Go本身对此就有很好的支持，而Gin更是再封装了一层，只需要在路由增加一行代码即可
 	r.StaticFS("/upload/images", http.Dir(upload.GetImageFullPath()))
+	r.StaticFS("/export", http.Dir(export.GetExcelFullPath()))
 
 	r.GET("/auth", api.GetAuth)
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
@@ -48,6 +50,8 @@ func InitRouter() *gin.Engine {
 		apiv1.DELETE("/tags/:id", v1.DeleteTag)
 		//  导出标签
 		apiv1.POST("/tags/export", v1.ExportTag)
+		//导入标签
+		apiv1.POST("/tags/import", v1.ImportTag)
 
 		// 获取文章列表
 		apiv1.GET("/articles", v1.GetArticles)

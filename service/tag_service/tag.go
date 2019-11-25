@@ -2,6 +2,7 @@ package tag_service
 
 import (
 	"encoding/json"
+	"io"
 	"strconv"
 	"time"
 
@@ -10,6 +11,8 @@ import (
 	"github.com/cuijxin/go-gin-example/pkg/gredis"
 	"github.com/cuijxin/go-gin-example/pkg/logging"
 	"github.com/cuijxin/go-gin-example/service/cache_service"
+
+	"github.com/360EntSecGroup-Skylar/excelize"
 	"github.com/tealeg/xlsx"
 )
 
@@ -134,6 +137,27 @@ func (t *Tag) Export() (string, error) {
 	}
 
 	return filename, nil
+}
+
+func (t *Tag) Import(r io.Reader) error {
+	xlsx, err := excelize.OpenReader(r)
+	if err != nil {
+		return err
+	}
+
+	rows := xlsx.GetRows("标签信息")
+	for irow, row := range rows {
+		if irow > 0 {
+			var data []string
+			for _, cell := range row {
+				data = append(data, cell)
+			}
+
+			models.AddTag(data[1], 1, data[2])
+		}
+	}
+
+	return nil
 }
 
 func (t *Tag) getMaps() map[string]interface{} {
