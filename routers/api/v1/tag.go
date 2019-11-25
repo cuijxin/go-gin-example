@@ -9,8 +9,10 @@ import (
 	// "github.com/gin-gonic/ginxie/beego/validation"
 	"github.com/unknwon/com"
 
+	"github.com/cuijxin/go-gin-example/models"
 	"github.com/cuijxin/go-gin-example/pkg/app"
 	"github.com/cuijxin/go-gin-example/pkg/e"
+	"github.com/cuijxin/go-gin-example/pkg/export"
 	"github.com/cuijxin/go-gin-example/pkg/setting"
 	"github.com/cuijxin/go-gin-example/pkg/util"
 	"github.com/cuijxin/go-gin-example/service/tag_service"
@@ -199,4 +201,40 @@ func DeleteTag(c *gin.Context) {
 	}
 
 	appG.Response(http.StatusOK, e.SUCCESS, nil)
+}
+
+// @Summary Export article tag
+// @Produce json
+// @Param data body models.ExportTagParams true "Export tag params"
+// @Success 200 {object} app.Response
+// @Failure 500 {object} app.Response
+// @Security ApiKeyAuth
+// @Router /api/v1/tags/export [post]
+func ExportTag(c *gin.Context) {
+	appG := app.Gin{C: c}
+	var data models.ExportTagParams
+	var err error
+	if err := c.Bind(&data); err != nil {
+		appG.Response(http.StatusBadRequest, e.INVALID_PARAMS, nil)
+		return
+	}
+
+	stateInt := -1
+	stateInt = com.StrTo(data.State).MustInt()
+
+	tagService := tag_service.Tag{
+		Name:  data.Name,
+		State: stateInt,
+	}
+
+	filename, err := tagService.Export()
+	if err != nil {
+		appG.Response(http.StatusOK, e.ERROR_EXPORT_TAG_FAIL, nil)
+		return
+	}
+
+	appG.Response(http.StatusOK, e.SUCCESS, map[string]string{
+		"export_url":      export.GetExcelFullUrl(filename),
+		"export_save_url": export.GetExcelPath() + filename,
+	})
 }

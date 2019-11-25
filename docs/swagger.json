@@ -337,19 +337,27 @@
                 }
             }
         },
-        "/api/v1/tags/import": {
+        "/api/v1/tags/export": {
             "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "produces": [
                     "application/json"
                 ],
-                "summary": "Import Image",
+                "summary": "Export article tag",
                 "parameters": [
                     {
-                        "type": "file",
-                        "description": "Image File",
-                        "name": "image",
-                        "in": "formData",
-                        "required": true
+                        "description": "Export tag params",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.ExportTagParams"
+                        }
                     }
                 ],
                 "responses": {
@@ -486,6 +494,37 @@
                     }
                 }
             }
+        },
+        "/upload": {
+            "post": {
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "summary": "Import Image",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "Image File",
+                        "name": "image",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/app.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/app.Response"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -499,6 +538,17 @@
                     "type": "object"
                 },
                 "msg": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.ExportTagParams": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "state": {
                     "type": "string"
                 }
             }

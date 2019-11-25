@@ -8,6 +8,13 @@ definitions:
       msg:
         type: string
     type: object
+  models.ExportTagParams:
+    properties:
+      name:
+        type: string
+      state:
+        type: string
+    type: object
 info:
   contact: {}
   license: {}
@@ -269,14 +276,16 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: Update article tag
-  /api/v1/tags/import:
+  /api/v1/tags/export:
     post:
       parameters:
-      - description: Image File
-        in: formData
-        name: image
+      - description: Export tag params
+        in: body
+        name: data
         required: true
-        type: file
+        schema:
+          $ref: '#/definitions/models.ExportTagParams'
+          type: object
       produces:
       - application/json
       responses:
@@ -288,7 +297,9 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/app.Response'
-      summary: Import Image
+      security:
+      - ApiKeyAuth: []
+      summary: Export article tag
   /auth:
     get:
       parameters:
@@ -312,6 +323,26 @@ paths:
           schema:
             $ref: '#/definitions/app.Response'
       summary: 获取认证信息
+  /upload:
+    post:
+      consumes:
+      - multipart/form-data
+      parameters:
+      - description: Image File
+        in: formData
+        name: image
+        required: true
+        type: file
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/app.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/app.Response'
+      summary: Import Image
 securityDefinitions:
   ApiKeyAuth:
     in: header

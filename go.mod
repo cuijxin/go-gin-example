@@ -21,6 +21,7 @@ require (
 	github.com/robfig/cron v1.2.0
 	github.com/swaggo/gin-swagger v1.2.0
 	github.com/swaggo/swag v1.6.3
+	github.com/tealeg/xlsx v1.0.5
 	github.com/ugorji/go v1.1.7 // indirect
 	github.com/unknwon/com v1.0.1
 	github.com/urfave/cli v1.22.1 // indirect
@@ -37,6 +38,7 @@ replace (
 	github.com/cuijxin/go-gin-example/models => ./go-gin-example/models
 	github.com/cuijxin/go-gin-example/pkg/app => ./go-gin-example/pkg/app
 	github.com/cuijxin/go-gin-example/pkg/e => ./go-gin-example/pkg/e
+	github.com/cuijxin/go-gin-example/pkg/export => ./go-gin-example/pkg/export
 	github.com/cuijxin/go-gin-example/pkg/file => ./go-gin-example/pkg/file
 	github.com/cuijxin/go-gin-example/pkg/logging => ./go-gin-example/pkg/logging
 	github.com/cuijxin/go-gin-example/pkg/setting => ./go-gin-example/pkg/setting

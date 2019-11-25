@@ -4,6 +4,11 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
+type ExportTagParams struct {
+	Name  string `json:"name"`
+	State string `json:"state"`
+}
+
 type Tag struct {
 	Model
 
