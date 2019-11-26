@@ -175,6 +175,18 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: Update article
+  /api/v1/articles/poster/generate:
+    post:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Generate qrcode
   /api/v1/tags:
     get:
       parameters:

@@ -5,8 +5,10 @@ import (
 	"net/http"
 
 	"github.com/astaxie/beego/validation"
+	"github.com/boombuler/barcode/qr"
 	"github.com/cuijxin/go-gin-example/pkg/app"
 	"github.com/cuijxin/go-gin-example/pkg/e"
+	"github.com/cuijxin/go-gin-example/pkg/qrcode"
 	"github.com/cuijxin/go-gin-example/pkg/setting"
 	"github.com/cuijxin/go-gin-example/pkg/util"
 	"github.com/cuijxin/go-gin-example/service/article_service"
@@ -289,4 +291,47 @@ func DeleteArticle(c *gin.Context) {
 	}
 
 	appG.Response(http.StatusOK, e.SUCCESS, nil)
+}
+
+const (
+	QRCODE_URL = "https://https://cuijxin.github.io/"
+)
+
+// @Summary Generate qrcode
+// @Produce json
+// @Success 200 {object} app.Response
+// @Failuer 500 {object} app.Response
+// @Security ApiKeyAuth
+// @Router /api/v1/articles/poster/generate [post]
+func GenerateArticlePoster(c *gin.Context) {
+	appG := app.Gin{c}
+	article := &article_service.Article{}
+	qr := qrcode.NewQrCode(QRCODE_URL, 300, 300, qr.M, qr.Auto) // 目前写死 gin 系列路径，可自行增加业务逻辑
+	posterName := article_service.GetPosterFlag() + "-" + qrcode.GetQrCodeFileName(qr.URL) + qr.GetQrCodeExt()
+	articlePoster := article_service.NewArticlePoster(posterName, article, qr)
+	articlePosterBgService := article_service.NewArticlePosterBg(
+		"bg.jpg",
+		articlePoster,
+		&article_service.Rect{
+			X0: 0,
+			Y0: 0,
+			X1: 550,
+			Y1: 700,
+		},
+		&article_service.Pt{
+			X: 125,
+			Y: 298,
+		},
+	)
+
+	_, filePath, err := articlePosterBgService.Generate()
+	if err != nil {
+		appG.Response(http.StatusOK, e.ERROR_GEN_ARTICLE_POSTER_FAIL, nil)
+		return
+	}
+
+	appG.Response(http.StatusOK, e.SUCCESS, map[string]string{
+		"poster_url":      qrcode.GetQrCodeFullUrl(posterName),
+		"poster_save_url": filePath + posterName,
+	})
 }
