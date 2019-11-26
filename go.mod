@@ -14,6 +14,7 @@ require (
 	github.com/go-ini/ini v1.51.0
 	github.com/go-openapi/jsonreference v0.19.3 // indirect
 	github.com/go-openapi/spec v0.19.4 // indirect
+	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0
 	github.com/golang/protobuf v1.3.2 // indirect
 	github.com/gomodule/redigo v2.0.0+incompatible
 	github.com/jinzhu/gorm v1.9.11
@@ -27,6 +28,7 @@ require (
 	github.com/ugorji/go v1.1.7 // indirect
 	github.com/unknwon/com v1.0.1
 	github.com/urfave/cli v1.22.1 // indirect
+	golang.org/x/image v0.0.0-20191009234506-e7c1f5e7dbb8 // indirect
 	golang.org/x/net v0.0.0-20191118183410-d06c31c94cae // indirect
 	golang.org/x/sys v0.0.0-20191118133127-cf1e2d577169 // indirect
 	golang.org/x/tools v0.0.0-20191118222007-07fc4c7f2b98 // indirect
